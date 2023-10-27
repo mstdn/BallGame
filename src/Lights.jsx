@@ -1,3 +1,5 @@
+import { Sky } from '@react-three/drei'
+
 export default function Lights()
 {
     return <>
@@ -14,5 +16,6 @@ export default function Lights()
             shadow-camera-left={ - 10 }
         />
         <ambientLight intensity={ 0.5 } />
+        <Sky sunPosition={ [ 4, 4, 1 ] } />
     </>
 }
