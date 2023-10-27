@@ -45,9 +45,7 @@ root.render(<>
                 position: [ 2.5, 4, 6 ]
             } }
         >
-            <StrictMode>
-                <Experience />
-            </StrictMode>
+            <Experience />
         </Canvas>
     </KeyboardControls>
 </>

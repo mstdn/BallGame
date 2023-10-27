@@ -11,7 +11,6 @@ import {
     useMemo
 } from 'react'
 import { Chest } from './Models/Chest.jsx'
-import { Banana } from './Models/Banana.jsx'
 
 /**
  * 
@@ -44,12 +43,6 @@ export function BlockStart({ position = [ 0, 0, 0 ] })
                 position={ [ 0, - 0.1, 0 ] }
                 receiveShadow
             />
-            {/* <RigidBody
-            >
-                <Banana
-                 position-y={ 4 }
-                />
-            </RigidBody> */}
         </group>    
     </>
 }
@@ -68,27 +61,28 @@ export function BlockEnd({ position = [ 0, 0, 0 ] })
                 geometry={ boxGeometry }
                 material={ floorMaterial }
                 scale={ [ 4, 0.2, 4 ] }
-                position={ [ 0, 0, 0 ] }
+                position={ [ 0, - 0.1, 0 ] }
                 receiveShadow
             />
-            <RigidBody 
+            {/* <RigidBody 
                 type="fixed"
                 colliders="hull"
                 restitution={ 0.2 }
                 friction={ 0 }
-                position={ [ 0, 0.25, 0 ] }
+                position={ [ 0, 0, 0 ] }
             >
                 <Hamburger 
                     scale={ 0.2 }
                 />
-            </RigidBody>
+            </RigidBody> */}
 
             <RigidBody
                 type="fixed"
                 colliders="hull"
                 restitution={ 0.2 }
                 friction={ 0 }
-                position={ [ 1, 0.25, 1.5 ] }
+                // position={ [ 1, 0.25, 1.5 ] }
+                position={ [ 0, 0, 0 ] }
                 rotation={ [ 0, 0, 0 ] }
             >
                 <Chest />
@@ -327,7 +321,7 @@ function Bounds({ length = 1 })
  *  The level 
  * 
  * */ 
-export function Level({ count = 5, types = [ BlockSpinner, BlockLimbo, BlockAxe ] })
+export function Level({ count = 10, types = [ BlockSpinner, BlockLimbo, BlockAxe ] })
 {
     const blocks = useMemo(() =>
     {
