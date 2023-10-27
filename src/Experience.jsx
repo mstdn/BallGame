@@ -1,29 +1,21 @@
-import Lights from './Lights.jsx'
-import { Level } from './Level.jsx'
 import { Physics } from '@react-three/rapier'
 import { Suspense } from 'react'
-import { 
-    OrbitControls,
-    Html,
-    useProgress
-} from '@react-three/drei'
-
-
-function Loader() {
-    const { progress } = useProgress()
-    return <Html center>{progress}%</Html>
-  }
-  
+import { OrbitControls } from '@react-three/drei'
+import { Level } from './Level.jsx'
+import Lights from './Lights.jsx'
+import Player from './Player.jsx'  
 
 export default function Experience()
 {
     return <>
-        <Suspense fallback={ <Loader /> }>
+        <Suspense fallback={ null }>
             <OrbitControls makeDefault />
-
-            <Physics debug>
+            <Physics
+                debug={ false }
+            >
                 <Lights />
                 <Level />
+                <Player />
             </Physics>
         </Suspense>
     </>

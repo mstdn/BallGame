@@ -10,6 +10,8 @@ import {
     useState,
     useMemo
 } from 'react'
+import { Chest } from './Models/Chest.jsx'
+import { Banana } from './Models/Banana.jsx'
 
 /**
  * 
@@ -42,6 +44,12 @@ export function BlockStart({ position = [ 0, 0, 0 ] })
                 position={ [ 0, - 0.1, 0 ] }
                 receiveShadow
             />
+            {/* <RigidBody
+            >
+                <Banana
+                 position-y={ 4 }
+                />
+            </RigidBody> */}
         </group>    
     </>
 }
@@ -74,6 +82,18 @@ export function BlockEnd({ position = [ 0, 0, 0 ] })
                     scale={ 0.2 }
                 />
             </RigidBody>
+
+            <RigidBody
+                type="fixed"
+                colliders="hull"
+                restitution={ 0.2 }
+                friction={ 0 }
+                position={ [ 1, 0.25, 1.5 ] }
+                rotation={ [ 0, 0, 0 ] }
+            >
+                <Chest />
+            </RigidBody>
+
         </group>    
     </>
 }
