@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
-import { Hamburger } from './Models/Hamburger.jsx'
+import { Chest } from './Models/Chest.jsx'
 import { 
     RigidBody,
     CuboidCollider
@@ -10,7 +10,7 @@ import {
     useState,
     useMemo
 } from 'react'
-import { Chest } from './Models/Chest.jsx'
+import { Float, Text } from '@react-three/drei'
 
 /**
  * 
@@ -36,6 +36,20 @@ export function BlockStart({ position = [ 0, 0, 0 ] })
     return <>
         {/* Floor */}
         <group position={ position }>
+            <Float floatIntensity={ 0.25 } rotationIntensity={ 0.25 }>
+                <Text
+                    font="./assets/fonts/bebas-neue-v9-latin-regular.woff"
+                    scale={ 0.5 }
+                    maxWidth={ 0.25 }
+                    lineHeight={ 0.75 }
+                    textAlign="right"
+                    position={ [ 0.75, 0.65, 0 ] }
+                    rotation-y={ - 0.25 }
+                >
+                    meow
+                    <meshBasicMaterial toneMapped={ false } />
+                </Text>
+            </Float>
             <mesh
                 geometry={ boxGeometry }
                 material={ floorMaterial }
@@ -57,6 +71,14 @@ export function BlockEnd({ position = [ 0, 0, 0 ] })
     return <>
         {/* Floor */}
         <group position={ position }>
+            <Text
+                font="./assets/fonts/bebas-neue-v9-latin-regular.woff"
+                scale={ 1 }
+                position={ [ 0, 2.25, 2 ] }
+            >
+                FINISH
+                <meshBasicMaterial toneMapped={ false } />
+            </Text>
             <mesh
                 geometry={ boxGeometry }
                 material={ floorMaterial }
@@ -64,24 +86,12 @@ export function BlockEnd({ position = [ 0, 0, 0 ] })
                 position={ [ 0, - 0.1, 0 ] }
                 receiveShadow
             />
-            {/* <RigidBody 
-                type="fixed"
-                colliders="hull"
-                restitution={ 0.2 }
-                friction={ 0 }
-                position={ [ 0, 0, 0 ] }
-            >
-                <Hamburger 
-                    scale={ 0.2 }
-                />
-            </RigidBody> */}
 
             <RigidBody
                 type="fixed"
                 colliders="hull"
                 restitution={ 0.2 }
                 friction={ 0 }
-                // position={ [ 1, 0.25, 1.5 ] }
                 position={ [ 0, 0, 0 ] }
                 rotation={ [ 0, 0, 0 ] }
             >
