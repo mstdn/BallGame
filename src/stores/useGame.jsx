@@ -8,7 +8,7 @@ export default create(subscribeWithSelector((set) =>
          * Game blocks count
          */
         blocksCount: 10,
-        blockSeed: 0,
+        blocksSeed: 0,
 
         /**
          * Time
@@ -37,7 +37,7 @@ export default create(subscribeWithSelector((set) =>
             set((state) => 
             {
                 if(state.phase === 'playing' || state.phase === 'ended')
-                    return { phase: 'ready', blockSeed: Math.random() }
+                    return { phase: 'ready', blocksSeed: Math.random() }
 
                     return {}
             })
