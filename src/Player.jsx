@@ -3,6 +3,7 @@ import { RigidBody, useRapier } from '@react-three/rapier'
 import { useFrame } from '@react-three/fiber'
 import { useKeyboardControls } from '@react-three/drei'
 import { useRef, useEffect, useState } from 'react'
+import useGame from './stores/useGame.jsx'
 
 export default function Player()
 {
@@ -15,6 +16,14 @@ export default function Player()
 
     const [ smoothedCameraPosition ] = useState(() => new THREE.Vector3(10, 10, 10))
     const [ smoothedCameraTarget ] = useState(() => new THREE.Vector3())
+
+    // Get game status from inGame
+    const start = useGame((state) => state.start)
+    const end = useGame((state) => state.end)
+    const restart = useGame((state) => state.restart)
+    // Get total blocks count
+    const blocksCount = useGame((state) => state.blocksCount)
+
 
     // Jumping
     const jump = () =>
@@ -34,8 +43,26 @@ export default function Player()
         
     }
 
+    // Reset
+    const reset = () =>
+    {
+        // Reset player to 0, 0, 0 with 0, 0, 0 impulse
+        body.current.setTranslation( { x: 0, y: 1, z: 0 } )
+        body.current.setLinvel( { x: 0, y: 0, z: 0 } )
+        body.current.setAngvel( { x: 0, y: 0, z: 0 } )
+    }
+
     useEffect(() =>
     {
+        const unsubscribeReset = useGame.subscribe(
+            (state) => state.phase,
+            (value) => 
+            {
+                if(value === 'ready')
+                    reset()
+            }
+        )
+
         const unsubscribeJump =  subscribeKeys(
             (state) => state.jump,
             (value) => 
@@ -46,13 +73,23 @@ export default function Player()
                 }
             }
         )
+
+        const unsubscribeAny = subscribeKeys(
+            () => 
+            {
+                start()
+            })
+
         // When destroyed unsubscribe from keys
         return () => 
         {
+            unsubscribeReset()
             unsubscribeJump()
+            unsubscribeAny()
         }
     }, [])
 
+    
     useFrame((state, delta) =>
     {
         /**
@@ -92,6 +129,7 @@ export default function Player()
         body.current.applyImpulse(impulse)
         body.current.applyTorqueImpulse(torque)
 
+
         /**
          * Camera
          */
@@ -117,6 +155,21 @@ export default function Player()
         // Update camera
         state.camera.position.copy(smoothedCameraPosition)
         state.camera.lookAt(smoothedCameraTarget)
+
+
+        /**
+         * Phases
+         */
+        // Check if player is at end
+        if(bodyPosition.z < - (blocksCount * 4 + 2))
+        {
+            end()
+        }
+        // Check if player falls off the map
+        if(bodyPosition.y < - 4)
+        {
+            restart()
+        }
 
     })
 
