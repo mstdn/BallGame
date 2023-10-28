@@ -280,6 +280,7 @@ function Bounds({ length = 1 })
             type="fixed"
             restitution={ 0.2 }
             friction={ 0 }
+            canSleep={ false }
         >
             {/* Right wall */}
             <mesh
